@@ -44,23 +44,22 @@ import { MatButtonModule } from '@angular/material/button';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements DoCheck , AfterViewInit {
+export class AppComponent implements DoCheck, AfterViewInit {
   title = 'angular-signals';
   myCustomLocalStorage = localStorage.getItem('myCustomLocalStorage');
 
   windowRef = window as any;
-  constructor() { 
+  constructor() {
     localStorage.setItem('myCustomLocalStorage', 'Test Value from localStorage set in constructor');
   }
 
-  ngOnInit() {
-    
-    console.log(appState({b: 6}));
-
+  ngOnInit() { 
     this.windowRef.customVariable = 'This is a custom variable in window storage';
 
     console.log('window customVariable', this.windowRef.customVariable)
     console.log('myCustomLocalStorage', this.myCustomLocalStorage)
+
+    console.log(appState({ b: 6 }));
   }
 
   ngAfterViewInit() {

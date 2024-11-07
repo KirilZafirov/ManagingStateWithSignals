@@ -19,12 +19,12 @@ export class UiStateService {
     pageSize: DEFAULT_PAGE_SIZE,
     displayedColumns: ['position', 'name', 'weight', 'symbol'],
     total: 0,
-    totalPages: 0, 
+    totalPages: 0,
     sortOrder: {
       key: 'position',
       activeIndex: 0,
       sortOrder: SortOrderType.ASC
-    }, 
+    },
     searchFields: [],
     uniqueProperty: 'id' as keyof PeriodicElement
   });
@@ -53,7 +53,7 @@ export class UiStateService {
       page: 0,
       pageSize: DEFAULT_PAGE_SIZE,
       total: tableData.length,
-      totalPages: tableData.length / DEFAULT_PAGE_SIZE, 
+      totalPages: tableData.length / DEFAULT_PAGE_SIZE,
       sortOrder: {
         key: 'position',
         activeIndex: 0,
@@ -61,7 +61,7 @@ export class UiStateService {
       },
     }));
   }
- 
+
   searchItem(searchTerm: string | null) {
     const state = this.pageState();
     const availableData = defaultSearchFunction(searchTerm, state.data, state.searchFields);
@@ -73,7 +73,7 @@ export class UiStateService {
       page: 0,
       pageSize: DEFAULT_PAGE_SIZE,
       total: availableData.length,
-      totalPages: availableData.length / DEFAULT_PAGE_SIZE, 
+      totalPages: availableData.length / DEFAULT_PAGE_SIZE,
       sortOrder: {
         key: 'position',
         activeIndex: 0,
@@ -99,7 +99,7 @@ export class UiStateService {
       activeIndex,
       type,
       sortOrder: pageState.sortOrder.key === key && pageState.sortOrder.sortOrder === SortOrderType.ASC ? SortOrderType.DESC : SortOrderType.ASC
-    } 
+    }
 
     genericSortItems({
       key: key,
@@ -110,7 +110,7 @@ export class UiStateService {
 
     this.pageState.update(oldValues => ({
       ...oldValues,
-      sortOrder: sortBy, 
+      sortOrder: sortBy,
       page: 0,
       pageSize: DEFAULT_PAGE_SIZE,
       availableData: [...(getPagedData<PeriodicElement>(0, DEFAULT_PAGE_SIZE, allData))]
