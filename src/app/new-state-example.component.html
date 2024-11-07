@@ -4,13 +4,15 @@
   </mat-label>
   <input matInput [attr.type]="'text'" type="text" #searchField [placeholder]="' Search Periodic Element'"
     [formControl]="control" />
+  <!-- [(ngModel)]="search" -->
+
   <button matSuffix mat-icon-button>
-    <mat-icon svgIcon='search' class='primary-500' />
+    <mat-icon fontIcon="search" />
   </button>
 </mat-form-field>
 
 <mat-paginator [length]='pageState().total' [pageIndex]="pageState().page" [pageSize]='pageState().pageSize'
-(page)="changePage($event)" />
+  (page)="changePage($event)" />
 
 <table mat-table [dataSource]="pageState().availableData || []" class="mat-elevation-z8">
 

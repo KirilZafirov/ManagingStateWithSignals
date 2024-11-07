@@ -33,7 +33,7 @@ export class UiStateService {
   getData() {
     return of(ELEMENT_DATA).subscribe(
       (response) => {
-        this.setTableData(response, {
+        this.setInitialState(response, {
           availableData: [...(getPagedData<PeriodicElement>(0, DEFAULT_PAGE_SIZE, response) ?? [])],
           page: 0,
           pageSize: DEFAULT_PAGE_SIZE,
@@ -44,7 +44,7 @@ export class UiStateService {
       });
   }
 
-  setTableData(tableData: PeriodicElement[], pageState: Partial<PageState>): void {
+  setInitialState(tableData: PeriodicElement[], pageState: Partial<PageState>): void {
     this.pageState.update(oldData => ({
       ...oldData,
       ...pageState,
@@ -61,18 +61,7 @@ export class UiStateService {
       },
     }));
   }
-
-  removeItem(id: number) {
-    this.pageState.update(oldState => {
-      const newDataList = oldState.data.filter((item) => item[oldState.uniqueProperty] !== id);
-
-      return {
-        ...oldState,
-        data: newDataList,
-      }
-    })
-  }
-
+ 
   searchItem(searchTerm: string | null) {
     const state = this.pageState();
     const availableData = defaultSearchFunction(searchTerm, state.data, state.searchFields);
