@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DoCheck } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, DoCheck } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -44,14 +44,15 @@ import { MatButtonModule } from '@angular/material/button';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements DoCheck {
+export class AppComponent implements DoCheck , AfterViewInit {
   title = 'angular-signals';
   myCustomLocalStorage = localStorage.getItem('myCustomLocalStorage');
 
   windowRef = window as any;
   constructor() { 
-    localStorage.setItem('myCustomLocalStorage', 'Test Value from localStorage');
+    localStorage.setItem('myCustomLocalStorage', 'Test Value from localStorage set in constructor');
   }
+
   ngOnInit() {
     
     console.log(appState({b: 6}));
@@ -60,6 +61,10 @@ export class AppComponent implements DoCheck {
 
     console.log('window customVariable', this.windowRef.customVariable)
     console.log('myCustomLocalStorage', this.myCustomLocalStorage)
+  }
+
+  ngAfterViewInit() {
+    localStorage.setItem('myCustomLocalStorage', 'Test Value from localStorage set in ngAfterViewInit');
   }
 
   doAction() {
