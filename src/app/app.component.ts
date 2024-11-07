@@ -1,14 +1,23 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DoCheck } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
+
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, MatIconModule, MatTabsModule],
+  imports: [RouterOutlet, RouterLink, MatIconModule, MatTabsModule, MatButtonModule],
   template: ` 
+  <button  mat-raised-button class="primary" (click)="doAction()">
+    Do Action
+  </button>
 
-    <nav mat-tab-nav-bar [tabPanel]='tabPanel'>
+<h1> {{myCustomLocalStorage}}</h1>
+
+<h1> {{windowRef.customVariable}}</h1>
+    <!-- <nav mat-tab-nav-bar [tabPanel]='tabPanel'>
       <a
         mat-tab-link
         routerLink='' 
@@ -30,11 +39,48 @@ import { MatTabsModule } from '@angular/material/tabs';
 
     <mat-tab-nav-panel #tabPanel>
       <router-outlet />
-    </mat-tab-nav-panel>
+    </mat-tab-nav-panel> -->
 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class AppComponent implements DoCheck {
   title = 'angular-signals';
+  myCustomLocalStorage = localStorage.getItem('myCustomLocalStorage');
+
+  windowRef = window as any;
+  constructor() { 
+    localStorage.setItem('myCustomLocalStorage', 'Test Value from localStorage');
+  }
+  ngOnInit() {
+    
+    console.log(appState({b: 6}));
+
+    this.windowRef.customVariable = 'This is a custom variable in window storage';
+
+    console.log('window customVariable', this.windowRef.customVariable)
+    console.log('myCustomLocalStorage', this.myCustomLocalStorage)
+  }
+
+  doAction() {
+    console.log('Do Action')
+    this.windowRef.customVariable = 'The window storage variable that I changed';
+    localStorage.setItem('myCustomLocalStorage', 'Test Value from localStorage changed');
+  }
+
+  ngDoCheck() {
+    console.log('perform change detection');
+    console.log('window customVariable changed:', this.windowRef.customVariable)
+    console.log('myCustomLocalStorage changed:', this.myCustomLocalStorage)
+  }
+}
+
+
+export const appState = (props?: any) => {
+  return {
+    a: 1,
+    b: 2,
+    c: 3,
+    ...props
+  }
 }
