@@ -3,10 +3,10 @@
     Search Periodic Element
   </mat-label>
   <input matInput [attr.type]="'text'" type="text" #searchField [placeholder]="' Search Periodic Element'"
-    [formControl]="control" />
-  <!-- [(ngModel)]="search" -->
+  [(ngModel)]="search"/>
+  <!--  -->
 
- 
+
 </mat-form-field>
 
 <mat-paginator [length]='pageState().total' [pageIndex]="pageState().page" [pageSize]='pageState().pageSize'

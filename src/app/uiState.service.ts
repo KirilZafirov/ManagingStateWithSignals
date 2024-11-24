@@ -117,5 +117,12 @@ export class UiStateService {
     }))
   }
 
+
+  updateState(newState: Partial<PageState>) {
+    this.pageState.update(oldValues => ({
+      ...oldValues,
+      ...newState
+    }))
+  }
 }
 

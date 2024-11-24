@@ -18,9 +18,9 @@ export interface PeriodicElement {
   position: number;
   weight: number;
   symbol: string;
-} 
+}
 
-export const DEFAULT_PAGE_SIZE = 3;
+export const DEFAULT_PAGE_SIZE = 5;
 
 export interface PageState {
   data: PeriodicElement[];
@@ -29,7 +29,7 @@ export interface PageState {
   page: number;
   pageSize: number;
   total: number;
-  totalPages: number; 
+  totalPages: number;
   sortOrder: SortBy;
   searchFields: string[];
   uniqueProperty: keyof PeriodicElement;

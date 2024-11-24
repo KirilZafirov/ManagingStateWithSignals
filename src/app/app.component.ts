@@ -9,37 +9,31 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, RouterLink, MatIconModule, MatTabsModule, MatButtonModule],
-  template: ` 
-  <button  mat-raised-button class="primary" (click)="doAction()">
-    Do Action
-  </button>
+  template: `
 
-<h1> {{myCustomLocalStorage}}</h1>
-
-<h1> {{windowRef.customVariable}}</h1>
-    <!-- <nav mat-tab-nav-bar [tabPanel]='tabPanel'>
+    <nav mat-tab-nav-bar [tabPanel]='tabPanel'>
       <a
         mat-tab-link
-        routerLink='' 
+        routerLink=''
       >
         <div>
-          <span>Old State management examples</span> 
+          <span>Old State management examples</span>
         </div>
       </a>
 
       <a
         mat-tab-link
-        routerLink='new' 
+        routerLink='new'
       >
         <div>
-          <span>New state management examples</span> 
+          <span>New state management examples</span>
         </div>
       </a>
     </nav>
 
     <mat-tab-nav-panel #tabPanel>
       <router-outlet />
-    </mat-tab-nav-panel> -->
+    </mat-tab-nav-panel>
 
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,7 +47,7 @@ export class AppComponent implements DoCheck, AfterViewInit {
     localStorage.setItem('myCustomLocalStorage', 'Test Value from localStorage set in constructor');
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.windowRef.customVariable = 'This is a custom variable in window storage';
 
     console.log('window customVariable', this.windowRef.customVariable)

@@ -28,34 +28,24 @@ import { toObservable } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./new-state-example.component.scss']
 })
-export class NewStateComponent implements OnInit, OnDestroy {
+export class NewStateComponent implements OnInit {
   readonly #uiStateService = inject(UiStateService);
 
   pageState = this.#uiStateService.pageState;
-  public readonly control = new UntypedFormControl();
 
-  private readonly destroy$$ = new Subject<void>();
+  search = model<string>('');
+
+constructor() {
+  toObservable(this.search).pipe(
+    filter(val => val.length > 2),
+    debounceTime(300),
+    distinctUntilChanged()
+  ).subscribe(val => {
+    this.#uiStateService.searchItem(val)
+  })
+}
   ngOnInit() {
-    this.#uiStateService.getData(); 
-
-    //TODO: Bonus points for the one who can suggest a better solution for this ?
-    this.control.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        filter((v: string) => {
-          if (v && v.length >= 3) {
-            return true;
-          } else {
-            this.#uiStateService.searchItem(null)
-            return false;
-          }
-        })
-      )
-      .subscribe(val => {
-        this.#uiStateService.searchItem(val)
-      });
-
+    this.#uiStateService.getData();
 
   }
 
@@ -65,13 +55,8 @@ export class NewStateComponent implements OnInit, OnDestroy {
 
   changePage(event: PageEvent) {
     this.#uiStateService.queryPage(event)
-  }; 
+  };
 
-  //TODO: Bonus points for the one who can suggest a better solution for this ?
-  public ngOnDestroy(): void {
-    this.destroy$$.next();
-    this.destroy$$.complete();
-  }
 }
 
 
@@ -80,10 +65,5 @@ export class NewStateComponent implements OnInit, OnDestroy {
 
 
 
-// search = model<string>('');
-// [(ngModel)]="search"
-// constructor() {
-//   toObservable(this.search).subscribe(val => {
-//     this.#uiStateService.searchItem(val)
-//   })
-// }
+//
+//
